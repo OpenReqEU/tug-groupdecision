@@ -1,0 +1,113 @@
+---
+swagger: "2.0"
+info:
+  description: "Requirement Detection Service"
+  version: "1.0.0"
+  title: "Requirement Detection Service"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "rsamer@ist.tugraz.at"
+  license:
+    name: "Eclipse Public License - v 2.0"
+    url: "https://www.eclipse.org/legal/epl-2.0/"
+host: "217.172.12.199:9008"
+basePath: "/v1"
+tags:
+- name: "compute"
+  description: "Utility estimation service"
+schemes:
+- "http"
+#      summary: "Detects whether a given text passage is a requirement or not."
+paths:
+  /compute:
+    post:
+      tags:
+      - "Requirement Detection"
+      description: ""
+      operationId: "detect_requirement"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of votes and aggregation function to be selected"
+        required: true
+        schema:
+            $ref: "#/definitions/Request"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Result"
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "application.controllers.requirement_detection_controller"
+definitions:
+  Request:
+    type: "object"
+    properties:
+      votes:
+        type: "array"
+        items:
+          $ref: "#/definitions/Vote"
+      aggregation_function:
+        type: "string"
+    example:
+      votes:
+        - stakeholder_id: 1
+          rating: 4
+          weight: 0.38
+          confidence: 0.81
+        - stakeholder_id: 2
+          rating: 2
+          weight: 0.41
+          confidence: 0.73
+      aggregation_function: "WEIGHTED_AVG"
+    xml:
+      name: "request"
+  Vote:
+    type: "object"
+    properties:
+      stakeholder_id:
+        type: "integer"
+        format: "int64"
+      rating:
+        type: "integer"
+        format: "int32"
+      weight:
+        type: "number"
+      confidence:
+        type: "number"
+    xml:
+      name: "request"
+  Result:
+    type: "object"
+    properties:
+      utility:
+        type: "number"
+      conflicts:
+        type: "array"
+        items:
+          $ref: "#/definitions/Conflict"
+    example:
+      utility: 0.81
+      conflicts:
+        - from_id: 1
+          to_id: 2
+        - from_id: 2
+          to_id: 3
+    xml:
+      name: "result"
+  Conflict:
+    type: "object"
+    properties:
+      from_id:
+        type: "integer"
+        format: "int64"
+      to_id:
+        type: "integer"
+        format: "int64"
