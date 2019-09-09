@@ -34,7 +34,7 @@ def detect_requirement(body):  # noqa: E501
             utility_value = 0.0
 
         # determine conflicts
-        RANGE_WIDTH = 5.0
+        RANGE_WIDTH = 1.0
         conflicts = []
         for v1 in request.votes:
             for v2 in request.votes:

@@ -18,7 +18,7 @@ class Vote(Model):
         """
         self.swagger_types = {
             'stakeholder_id': int,
-            'rating': int,
+            'rating': float,
             'weight': float,
             'confidence': float
         }
@@ -68,22 +68,22 @@ class Vote(Model):
         self._stakeholder_id = stakeholder_id
 
     @property
-    def rating(self) -> int:
+    def rating(self) -> float:
         """Gets the rating of this vote.
 
 
         :return: The rating of this vote.
-        :rtype: int
+        :rtype: float
         """
         return self._rating
 
     @rating.setter
-    def rating(self, rating: int):
+    def rating(self, rating: float):
         """Sets the rating of this vote.
 
 
         :param rating: The rating of this vote.
-        :type rating: int
+        :type rating: float
         """
 
         self._rating = rating

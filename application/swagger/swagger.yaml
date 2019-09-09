@@ -59,11 +59,11 @@ definitions:
     example:
       votes:
         - stakeholder_id: 1
-          rating: 4
+          rating: 0.8
           weight: 0.38
           confidence: 0.81
         - stakeholder_id: 2
-          rating: 2
+          rating: 0.2
           weight: 0.41
           confidence: 0.73
       aggregation_function: "WEIGHTED_AVG"
@@ -76,8 +76,11 @@ definitions:
         type: "integer"
         format: "int64"
       rating:
-        type: "integer"
-        format: "int32"
+        type: "number"
+        minimum: 0
+        exclusiveMinimum: false
+        maximum: 1
+        exclusiveMaximum: false
       weight:
         type: "number"
       confidence:
